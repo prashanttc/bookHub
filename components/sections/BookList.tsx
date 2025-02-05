@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import BookCard from "../BookCard";
 
 const BookList = ({ books }: { books: books[] }) => {
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(5);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const updateVisibleCount = () => {
@@ -11,7 +11,7 @@ const BookList = ({ books }: { books: books[] }) => {
     if (screenWidth < 768) {
       setVisibleCount(3);
     } else {
-      setVisibleCount(6);
+      setVisibleCount(5);
     }
   };
 
