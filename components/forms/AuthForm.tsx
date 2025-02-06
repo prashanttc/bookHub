@@ -9,6 +9,9 @@ import FormInput from "../FormInput";
 import { AuthformSchema } from "@/lib/utils";
 import { SelectContent, SelectItem } from "../ui/select";
 import { departments, year } from "@/constants";
+import { useState } from "react";
+import { signIn, signUp } from "@/lib/auth";
+import { supabase } from "@/lib/supabaseClient";
 
 const formSchema = AuthformSchema("sign-up");
 
@@ -17,6 +20,9 @@ type Props = {
 };
 
 const AuthForm = ({ type }: Props) => {
+  const [isloading, setIsloading] = useState(false);
+  const [error, setError] = useState("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,11 +34,30 @@ const AuthForm = ({ type }: Props) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const User = await signUp({
+        email: values.email,
+        password: values.password,
+      });
+      if (User.error) {
+        console.log("signUp error");
+      }
+      const UserDetails = await supabase.from("User").insert([
+        {
+          authUserId: User.data.user?.id,
+          name: values.name,
+          email: values.email,
+          phone: values.phone,
+          enrollmentNumber: values.enrollmentNumber,
+          department: values.department,
+          year: values.year,
+        },
+      ]);
+    } catch (error: any) {
+      console.log("error", error);
+    }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="">
@@ -61,7 +86,7 @@ const AuthForm = ({ type }: Props) => {
         />
         {type === "signUp" && (
           <>
-            <div className="flex flex-col md:flex-row md:gap-10">
+            <div className="flex flex-col xl:flex-row xl:gap-10">
               <div className="flex-1">
                 <FormInput
                   type="select"
