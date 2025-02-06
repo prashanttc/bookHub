@@ -39,15 +39,7 @@ export const navigationLinks = [
       text: "Account Requests",
     },
   ];
-  
-  export const FIELD_NAMES = {
-    fullName: "Full name",
-    email: "Email",
-    universityId: "University ID Number",
-    password: "Password",
-    universityCard: "Upload University ID Card",
-  };
-  
+
   export const FIELD_TYPES = {
     fullName: "text",
     email: "email",
@@ -209,3 +201,36 @@ export const navigationLinks = [
       value: "Default",
     },
   ];
+
+  export const departments= [
+    {
+     value:'aids',
+     label:'artificial intelligence and datascience'
+    },
+    {
+     value:'cs',
+     label:'computer science'
+    },
+    {
+     value:'csit',
+     label:'computer science and information technology'
+    },
+    {
+     value:'it',
+     label:'information technology'
+    },
+    {
+     value:'me',
+     label:'mechenical engineering'
+    },
+    {
+     value:'mce',
+     label:'civil engineering'
+    },
+  ]
+  export const year =[
+    {value:'first year'},
+    {value:'second year'},
+    {value:'third year'},
+    {value:'fourth year'},
+  ]
