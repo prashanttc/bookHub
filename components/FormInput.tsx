@@ -1,8 +1,6 @@
 import { AuthformSchema } from "@/lib/utils";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -17,18 +15,20 @@ import {
 import { Input } from "./ui/input";
 import { Control, FieldPath } from "react-hook-form";
 import { z } from "zod";
-import { departments } from "@/constants";
 
 const formSchema = AuthformSchema("sign-up");
-type Props = {
+
+interface Props {
   control: Control<z.infer<typeof formSchema>>;
   name: FieldPath<z.infer<typeof formSchema>>;
   placeholder: string;
   label: string;
+  children?: React.ReactNode;
   type: "input" | "select";
-};
+}
 
-const FormInput = ({ control, name, placeholder, label, type }: Props) => {
+const FormInput = (props: Props) => {
+  const { control, name, label, type, placeholder } = props;
   return (
     <FormField
       control={control}
@@ -39,25 +39,26 @@ const FormInput = ({ control, name, placeholder, label, type }: Props) => {
             <FormLabel className="text-light-100 font-light text-md">
               {label}
             </FormLabel>
-            <FormControl>
+            <FormControl className="">
               {type === "input" ? (
                 <Input
-                  className="p-5 bg-[#232839] border-none outline-none "
+                  className="p-5 h-11  bg-[#232839] border-none text-white outline-none "
                   placeholder={placeholder}
                   {...field}
                 />
               ) : (
-                <Select>
-                  <SelectTrigger className="min-w-[200px] border-none text-white bg-[#232839]">
-                    <SelectValue placeholder={placeholder} className="text-[#D6E0FF66] placeholder:text-[#D6E0FF66] " />
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="min-w-[200px] p-5 border-none text-white bg-[#232839]">
+                    <SelectValue
+                      placeholder={placeholder}
+                      className="text-[#D6E0FF66] placeholder:text-[#D6E0FF66] "
+                    />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#232839] text-white border-none hover:bg-red-400">
-                    {departments.map((branch) => (
-                      <SelectItem value={branch.value} key={branch.label} className="">
-                        {branch.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
+                  {props.children}
                 </Select>
               )}
             </FormControl>
