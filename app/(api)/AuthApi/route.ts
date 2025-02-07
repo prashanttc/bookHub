@@ -13,17 +13,27 @@ export const signUpApi = async ({
   try {
     const { data: existingUser, error: checkError } = await supabase
       .from("User")
-      .select("id")
-      .eq("email", email)
+      .select("id, email, phone, enrollmentNumber")
+      .or(
+        `email.eq.${email},phone.eq.${phone},enrollmentNumber.eq.${enrollmentNumber}`
+      )
       .single();
 
-    if (checkError && checkError.code !== "PGRST116") {
-      return { error: "Something went wrong while checking user existence." };
+    if (checkError) {
+      console.error("Supabase Error:", checkError);
+      return { error: "Database error. Please try again." };
     }
-    if (existingUser){
-      return { error: "user already exists" };
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return { error: "Email is already in use." };
+      }
+      if (existingUser.phone === phone) {
+        return { error: "Phone number is already in use." };
+      }
+      if (existingUser.enrollmentNumber === enrollmentNumber) {
+        return { error: "Enrollment number is already in use." };
+      }
     }
-
     const User = await signUp({
       email: email,
       password: password,

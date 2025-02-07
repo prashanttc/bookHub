@@ -6,7 +6,9 @@
   :root {
     --radius: 0.5rem;
   }
-
+  * {
+    @apply scrollbar-none;
+  }
   .hide-scrollbar::-webkit-scrollbar {
     width: 0px;
     height: 0px;
@@ -226,6 +228,14 @@
 }
 
 @layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
   .gradient-vertical {
     background: linear-gradient(180deg, #12141d 0%, #12151f 100%);
   }
