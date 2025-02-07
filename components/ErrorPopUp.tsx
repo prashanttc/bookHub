@@ -9,7 +9,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { UserRoundSearch } from "lucide-react";
 import Image from "next/image";
 
 type ErrorAlertProps = {

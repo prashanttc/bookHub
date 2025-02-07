@@ -14,7 +14,10 @@ export const AuthformSchema = (type: string) =>
         : z.string().optional(),
     enrollmentNumber:
       type === "sign-up"
-        ? z.string().min(3, { message: "enrollment number is required" })
+        ? z.string().regex(/^0832[A-Z]{2}\d{1,8}$/, {
+            message:
+              "Enrollment number must start with 0832, followed by 2 capital letters, and up to 8 digits.",
+          })
         : z.string().optional(),
     year:
       type === "sign-up"
@@ -30,6 +33,8 @@ export const AuthformSchema = (type: string) =>
       .min(8, { message: "Password must be 8 characters long" }),
     phone:
       type === "sign-up"
-        ? z.string().min(10, { message: "Phone number is required" })
+        ? z.string().regex(/^[6789]\d{9}$/, {
+            message: "Phone number must be a valid 10-digit Indian number",
+          })
         : z.string().optional(),
   });
