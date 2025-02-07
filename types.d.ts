@@ -12,3 +12,12 @@
     cover:string;  
     isLoanedBook?:boolean;
  }
+ interface UserProps {
+ email:string,
+ name:string,
+ password:string,
+ phone:string,
+ enrollmentNumber:string,
+ department:string,
+ year:string,
+ }
