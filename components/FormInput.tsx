@@ -42,7 +42,7 @@ const FormInput = (props: Props) => {
             <FormControl className="">
               {type === "input" ? (
                 <Input
-                  className="p-5 h-11  bg-[#232839] border-none text-white outline-none "
+                  className="p-5 h-11  bg-[#232839] border-none text-white outline-none w-[100%] "
                   placeholder={placeholder}
                   {...field}
                 />
@@ -52,10 +52,10 @@ const FormInput = (props: Props) => {
                   value={field.value}
                   defaultValue={field.value}
                 >
-                  <SelectTrigger className="min-w-[200px] p-5 border-none text-white bg-[#232839]">
+                  <SelectTrigger className="min-w-[200px] p-5 border-none text-white bg-[#232839] md:max-w-[100%]">
                     <SelectValue
                       placeholder={placeholder}
-                      className="text-[#D6E0FF66] placeholder:text-[#D6E0FF66] "
+                      className="text-[#D6E0FF66] placeholder:text-[#D6E0FF66]  "
                     />
                   </SelectTrigger>
                   {props.children}

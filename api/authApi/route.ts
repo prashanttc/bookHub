@@ -17,8 +17,9 @@ export const signUpApi = async ({
       .or(
         `email.eq.${email},phone.eq.${phone},enrollmentNumber.eq.${enrollmentNumber}`
       )
+      .limit(1)
       .maybeSingle();
-
+      
     if (checkError) {
       console.error("Supabase Error:", checkError);
       return { error: "Database error. Please try again." };

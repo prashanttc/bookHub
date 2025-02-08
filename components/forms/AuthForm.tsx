@@ -10,7 +10,7 @@ import { AuthformSchema } from "@/lib/utils";
 import { SelectContent, SelectItem } from "../ui/select";
 import { departments, year } from "@/constants";
 import { useEffect, useState } from "react";
-import { signInApi, signUpApi } from "@/app/(api)/AuthApi/route";
+import { signInApi, signUpApi } from "@/api/authApi/route";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import ErrorPopUp from "../ErrorPopUp";
@@ -119,7 +119,7 @@ const AuthForm = ({ type }: Props) => {
                     placeholder="select your department"
                     label="Department"
                   >
-                    <SelectContent className="bg-[#232839] text-white border-none ">
+                    <SelectContent className="bg-[#232839] text-white border-none">
                       {departments.map((branch) => (
                         <SelectItem
                           value={branch.value}
@@ -174,6 +174,7 @@ const AuthForm = ({ type }: Props) => {
           )}
 
           <Button
+          onMouseEnter={()=>router.prefetch('/')}
             type="submit"
             className="mt-10 w-full p-5"
             disabled={isloading}
