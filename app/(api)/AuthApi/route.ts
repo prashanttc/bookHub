@@ -1,4 +1,4 @@
-import { signUp } from "@/lib/auth";
+import { signIn, signUp } from "@/lib/auth";
 import { supabase } from "@/lib/supabaseClient";
 
 export const signUpApi = async ({
@@ -62,5 +62,34 @@ export const signUpApi = async ({
     return { success: true };
   } catch (error: any) {
     return { error: error.message || "An unexpected error occurred." };
+  }
+};
+
+export const signInApi = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  try {
+    const { data: existingUser, error: Usererror } = await supabase
+      .from("User")
+      .select("*")
+      .eq("email", email)
+      .maybeSingle();
+    if (Usererror) {
+      return { error: Usererror.message };
+    }
+    if (!existingUser) {
+      return { error: "no user exists with this email! create a new account." };
+    }
+    const { data, error: signInError } = await signIn({ email, password });
+    if (signInError) {
+      return { error: "email or password is incorrect" };
+    }
+    return { success: true, user: data.user, sesssion: data.session };
+  } catch (error) {
+    return { error: "error while signing in! " };
   }
 };

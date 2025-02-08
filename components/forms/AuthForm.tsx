@@ -10,7 +10,7 @@ import { AuthformSchema } from "@/lib/utils";
 import { SelectContent, SelectItem } from "../ui/select";
 import { departments, year } from "@/constants";
 import { useEffect, useState } from "react";
-import { signUpApi } from "@/app/(api)/AuthApi/route";
+import { signInApi, signUpApi } from "@/app/(api)/AuthApi/route";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import ErrorPopUp from "../ErrorPopUp";
@@ -47,27 +47,44 @@ const AuthForm = ({ type }: Props) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsloading(true);
     setError("");
+  
+    console.log("Form type:", type); // Debugging
+  
     if (type === "signUp") {
       const signUpData = {
-        email: values.email!,
+        email: values.email,
         name: values.name!,
-        password: values.password!,
+        password: values.password,
         phone: values.phone!,
         department: values.department!,
         year: values.year!,
         enrollmentNumber: values.enrollmentNumber!,
       };
-
+  
       const response = await signUpApi(signUpData);
       if (response.error) {
         setError(response.error);
-        setIsloading(false);
       } else {
-        setIsloading(false);
+        router.push("/");
+      }
+    } else if (type === "signIn") {  // Ensure the correct check here
+      console.log("Starting Sign-In Process...");
+  
+      const response = await signInApi({
+        email: values.email,
+        password: values.password,
+      });
+  
+      if (response.error) {
+        setError(response.error);
+      } else {
         router.push("/");
       }
     }
+  
+    setIsloading(false);
   };
+  
   return (
     <>
       <Form {...form}>
@@ -169,7 +186,7 @@ const AuthForm = ({ type }: Props) => {
           </Button>
         </form>
       </Form>
-      <ErrorPopUp errorMessage={error} open={open} setOpen={setOpen}/>
+      <ErrorPopUp errorMessage={error} open={open} setOpen={setOpen} />
     </>
   );
 };
