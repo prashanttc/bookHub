@@ -15,8 +15,6 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import ErrorPopUp from "../ErrorPopUp";
 
-const formSchema = AuthformSchema("sign-up");
-
 type Props = {
   type: "signIn" | "signUp";
 };
@@ -33,6 +31,8 @@ const AuthForm = ({ type }: Props) => {
     }
   }, [error]);
 
+  const formSchema = AuthformSchema(type);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,9 +47,7 @@ const AuthForm = ({ type }: Props) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsloading(true);
     setError("");
-  
-    console.log("Form type:", type); // Debugging
-  
+
     if (type === "signUp") {
       const signUpData = {
         email: values.email,
@@ -60,31 +58,29 @@ const AuthForm = ({ type }: Props) => {
         year: values.year!,
         enrollmentNumber: values.enrollmentNumber!,
       };
-  
+
       const response = await signUpApi(signUpData);
       if (response.error) {
         setError(response.error);
       } else {
         router.push("/");
       }
-    } else if (type === "signIn") {  // Ensure the correct check here
-      console.log("Starting Sign-In Process...");
-  
+    } else if (type === "signIn") {
       const response = await signInApi({
         email: values.email,
         password: values.password,
       });
-  
+
       if (response.error) {
         setError(response.error);
       } else {
         router.push("/");
       }
     }
-  
+
     setIsloading(false);
   };
-  
+
   return (
     <>
       <Form {...form}>
