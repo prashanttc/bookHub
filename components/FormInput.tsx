@@ -1,4 +1,4 @@
-import { AuthformSchema } from "@/lib/utils";
+import { AuthformSchema, UserFormSchema } from "@/lib/utils";
 import {
   Select,
   SelectTrigger,
@@ -14,35 +14,33 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Control, FieldPath } from "react-hook-form";
-import { z } from "zod";
-
-const formSchema = AuthformSchema("sign-up");
 
 interface Props {
-  control: Control<z.infer<typeof formSchema>>;
-  name: FieldPath<z.infer<typeof formSchema>>;
+  control: Control<any>;
+  name: FieldPath<any>;
   placeholder: string;
   label: string;
   children?: React.ReactNode;
   type: "input" | "select";
+  formType: "auth" | "user"; 
 }
 
-const FormInput = (props: Props) => {
-  const { control, name, label, type, placeholder } = props;
+const FormInput = ({ control, name, label, type, placeholder, formType, children }: Props) => {
+  const formSchema = formType === "auth" ? AuthformSchema("sign-up") : UserFormSchema();
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="">
+        <FormItem>
           <div className="flex flex-col gap-4 mt-5">
             <FormLabel className="text-light-100 font-light text-md">
               {label}
             </FormLabel>
-            <FormControl className="">
+            <FormControl>
               {type === "input" ? (
                 <Input
-                  className="p-5 h-11  bg-[#232839] border-none text-white outline-none w-[100%] "
+                  className="form-input-custom"
                   placeholder={placeholder}
                   {...field}
                 />
@@ -53,12 +51,9 @@ const FormInput = (props: Props) => {
                   defaultValue={field.value}
                 >
                   <SelectTrigger className="min-w-[200px] p-5 border-none text-white bg-[#232839] md:max-w-[100%]">
-                    <SelectValue
-                      placeholder={placeholder}
-                      className="text-[#D6E0FF66] placeholder:text-[#D6E0FF66]  "
-                    />
+                    <SelectValue placeholder={placeholder} />
                   </SelectTrigger>
-                  {props.children}
+                  {children}
                 </Select>
               )}
             </FormControl>

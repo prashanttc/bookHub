@@ -8,7 +8,7 @@ import { sampleBooks } from "@/constants";
 
 const BookOverview = () => {
   const path = usePathname();
-  const id = path.split('/')[2];
+  const id = path.split('/')[3];
   const bookId = Number(id)
   const book  = sampleBooks.find(book => book.id === bookId)!;
   return (

@@ -38,3 +38,12 @@ export const AuthformSchema = (type: string) =>
           })
         : z.string().optional(),
   });
+export const UserFormSchema = () =>
+  z.object({
+    name: z.string().min(2, { message: "Name is required" }),
+    year: z.string().min(8, { message: "year is required" }),
+    department: z.string().min(2, { message: "department is required" }), 
+    phone: z.string().regex(/^[6789]\d{9}$/, {
+      message: "Phone number must be a valid 10-digit Indian number",
+    }),
+  });

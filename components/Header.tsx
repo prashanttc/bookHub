@@ -1,4 +1,5 @@
 "use client";
+import { useUser } from "@/context/UserContext";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +8,8 @@ import React from "react";
 
 const Header = () => {
   const path = usePathname();
-
+  const { loading, user } = useUser();
+  if (loading) return <p>Loading...</p>;
   return (
     <header className="my-10 flex justify-between gap-5 ">
       <Link href="/">
@@ -33,10 +35,10 @@ const Header = () => {
         </li>
         <li>
           <Link
-            href="/search"
+            href="/student/search"
             className={cn(
               "text-base cursor-pointer capitalize",
-              path === "/search" ? "text-light-200" : "text-light-100"
+              path === "/student/search" ? "text-light-200" : "text-light-100"
             )}
           >
             Search
@@ -44,15 +46,13 @@ const Header = () => {
         </li>
         <li>
           <Link
-            href="/profile"
+            href="/student/profile"
             className={cn(
               "text-base cursor-pointer capitalize",
-              path === "/search" ? "text-light-200" : "text-light-100"
+              path === "/student/profile" ? "text-light-200" : "text-light-100"
             )}
           >
-            <div className="h-10 w-10 rounded-full bg-light-200 text-black flex items-center justify-center font-semibold">
-              PC
-            </div>
+            profile{" "}
           </Link>
         </li>
       </ul>

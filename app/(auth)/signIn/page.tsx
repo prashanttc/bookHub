@@ -2,6 +2,7 @@ import AuthForm from "@/components/forms/AuthForm";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import PasswordReset from "@/components/PasswordReset";
 
 const page = () => {
   return (
@@ -15,8 +16,15 @@ const page = () => {
       <h1 className="text-white text-3xl font-semibold">
         login into your library account
       </h1>
-      <p className="text-light-100 ">not have a account? <Link href='/signUp' className="text-light-200 underline"> register here</Link></p>
-      <AuthForm type='signIn'/>
+      <p className="text-light-100 ">
+        not have a account?{" "}
+        <Link href="/signUp" className="text-light-200 underline">
+          {" "}
+          register here
+        </Link>
+      </p>
+      <AuthForm type="signIn" />
+      <PasswordReset />
     </div>
   );
 };

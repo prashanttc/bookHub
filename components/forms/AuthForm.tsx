@@ -10,11 +10,10 @@ import { AuthformSchema } from "@/lib/utils";
 import { SelectContent, SelectItem } from "../ui/select";
 import { departments, year } from "@/constants";
 import { useEffect, useState } from "react";
-import { signInApi, signUpApi } from "@/api/authApi/route";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import ErrorPopUp from "../ErrorPopUp";
-
+import {signIn,signUp} from '../../lib/helperFuntions/utils'
 type Props = {
   type: "signIn" | "signUp";
 };
@@ -58,35 +57,34 @@ const AuthForm = ({ type }: Props) => {
         year: values.year!,
         enrollmentNumber: values.enrollmentNumber!,
       };
-
-      const response = await signUpApi(signUpData);
+      const response = await signUp(signUpData);
       if (response.error) {
         setError(response.error);
       } else {
-        router.push("/");
+        router.push("/student/dashboard");
       }
     } else if (type === "signIn") {
-      const response = await signInApi({
+      const response = await signIn({
         email: values.email,
         password: values.password,
       });
-
+      console.log("response",response)
       if (response.error) {
         setError(response.error);
       } else {
-        router.push("/");
+        router.push("/student/dashboard");
       }
     }
 
     setIsloading(false);
   };
-
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="  ">
           {type === "signUp" && (
             <FormInput
+             formType="auth"
               type="input"
               control={form.control}
               name="name"
@@ -95,6 +93,7 @@ const AuthForm = ({ type }: Props) => {
             />
           )}
           <FormInput
+           formType="auth"
             type="input"
             control={form.control}
             name="email"
@@ -102,6 +101,7 @@ const AuthForm = ({ type }: Props) => {
             label="email"
           />
           <FormInput
+           formType="auth"
             type="input"
             control={form.control}
             name="password"
@@ -113,6 +113,7 @@ const AuthForm = ({ type }: Props) => {
               <div className="flex flex-col xl:flex-row xl:gap-10">
                 <div className="flex-1">
                   <FormInput
+                   formType="auth"
                     type="select"
                     control={form.control}
                     name="department"
@@ -133,6 +134,7 @@ const AuthForm = ({ type }: Props) => {
                   </FormInput>
                 </div>
                 <FormInput
+                 formType="auth"
                   type="select"
                   control={form.control}
                   name="year"
@@ -155,6 +157,7 @@ const AuthForm = ({ type }: Props) => {
               <div className="flex flex-col md:flex-row md:gap-10 ">
                 <div className="flex-1">
                   <FormInput
+                   formType="auth"
                     type="input"
                     control={form.control}
                     name="enrollmentNumber"
@@ -163,6 +166,7 @@ const AuthForm = ({ type }: Props) => {
                   />
                 </div>
                 <FormInput
+                 formType="auth"
                   type="input"
                   control={form.control}
                   name="phone"
@@ -174,7 +178,7 @@ const AuthForm = ({ type }: Props) => {
           )}
 
           <Button
-          onMouseEnter={()=>router.prefetch('/')}
+            onMouseEnter={() => router.prefetch("/")}
             type="submit"
             className="mt-10 w-full p-5"
             disabled={isloading}
