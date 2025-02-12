@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>{children}
         <GlobalLoader/>
-      <Toaster />
+      <Toaster position='top-right' richColors/>
       </body>
     </html>
   );

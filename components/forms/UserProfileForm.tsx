@@ -6,7 +6,7 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import FormInput from "../FormInput";
-import { AuthformSchema, UserFormSchema } from "@/lib/utils";
+import {  UserFormSchema } from "@/lib/utils";
 import { SelectContent, SelectItem } from "../ui/select";
 import { departments, year } from "@/constants";
 import { useEffect, useState } from "react";
@@ -15,7 +15,8 @@ import { Loader } from "lucide-react";
 import ErrorPopUp from "../ErrorPopUp";
 import { useUser } from "@/context/UserContext";
 import GlobalLoader from "../GlobalLoader";
-import { updateProfile } from "@/lib/helperFuntions/utils";
+import { updateProfile } from "@/lib/helperFuntions/user";
+import { toast } from "sonner";
 
 const UserProfileForm = () => {
   const { loading, user } = useUser();
@@ -63,6 +64,7 @@ const UserProfileForm = () => {
     } else {
       setIsloading(false)
       router.back()
+      toast.success("user profile updated successfully")
     }
   };
   return (

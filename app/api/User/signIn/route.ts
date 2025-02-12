@@ -13,6 +13,8 @@ export async function POST(req: Request) {
       .maybeSingle();
 
     if (userError) {
+      console.log("usererror",userError)
+
       return NextResponse.json({ error: userError.message }, { status: 500 });
     }
     if (!existingUser) {

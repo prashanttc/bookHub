@@ -1,8 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import BookCard from "../BookCard";
+import { Skeleton } from "../ui/skeleton";
 
-const BookList = ({ books }: { books: books[] }) => {
+type bookListProps = {
+  books: bookProps[];
+  loading: boolean;
+};
+const BookList = ({ books, loading }: bookListProps) => {
   const [visibleCount, setVisibleCount] = useState(5);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -33,7 +38,7 @@ const BookList = ({ books }: { books: books[] }) => {
   };
 
   return (
-    <section className="mt-10">
+    <section className="mt-10 w-full ">
       <div className="flex justify-between">
         <h1 className="font-bebas-neue text-4xl text-light-100 ">
           Popular Books
@@ -47,9 +52,20 @@ const BookList = ({ books }: { books: books[] }) => {
       </div>
       <div className="relative">
         <ul className="book-list relative">
-          {books.slice(0, visibleCount).map((book) => (
-            <BookCard key={book.title} {...book} />
-          ))}
+          {loading ? (
+            <>
+              {books.slice(0, visibleCount).map((book) => (
+                <Skeleton key={book.title}  className="w-[90vw] gap-10 md:w-[250px] rounded-2xl bg-[#12141D] p-5 md:min-h-[410px] md:max-h-[410px] flex flex-row md:flex-col"/>
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              {books.slice(0, visibleCount).map((book) => (
+                <BookCard key={book.title} {...book} />
+              ))}
+            </>
+          )}
         </ul>
       </div>
     </section>

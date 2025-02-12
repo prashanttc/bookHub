@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import BookCover from './BookCover'
 
-const BookCard = ({id, genre,color,cover, title}:books) => {
+const BookCard = ({id, author,color,cover, title}:bookProps) => {
   return (
   <li className=''>
     <Link href={`/student/book/${id}`} className=''>
@@ -13,7 +13,7 @@ const BookCard = ({id, genre,color,cover, title}:books) => {
       </div>
       <div className="mt-2 flex flex-col gap-3">
         <h1 className="text-xl font-semibold text-white ">{title}</h1>
-        <h1 className="text-light-100 text-sm italic">{genre}</h1>
+        <h1 className="text-light-100 text-sm italic">{author}</h1>
       </div>
     </div></Link>
   </li> 

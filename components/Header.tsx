@@ -11,7 +11,7 @@ const Header = () => {
   const { loading, user } = useUser();
   if (loading) return <p>Loading...</p>;
   return (
-    <header className="my-10 flex justify-between gap-5 ">
+    <header className="my-5 flex justify-between gap-5 ">
       <Link href="/">
         <Image
           src="/icons/logo.svg"

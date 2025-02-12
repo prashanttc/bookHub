@@ -13,7 +13,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import ErrorPopUp from "../ErrorPopUp";
-import {signIn,signUp} from '../../lib/helperFuntions/utils'
+import {signIn,signUp} from '../../lib/helperFuntions/user'
+import { toast } from "sonner";
 type Props = {
   type: "signIn" | "signUp";
 };
@@ -61,7 +62,8 @@ const AuthForm = ({ type }: Props) => {
       if (response.error) {
         setError(response.error);
       } else {
-        router.push("/student/dashboard");
+        toast.success("user created succssfully. login now")
+        router.push("/signIn");
       }
     } else if (type === "signIn") {
       const response = await signIn({

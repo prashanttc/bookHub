@@ -1,4 +1,4 @@
- interface books {
+ interface bookProps {
     id:number;
     title:string;
     author:string;

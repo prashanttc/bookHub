@@ -32,7 +32,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(userDetails);
         setSession(session);
       }
-
       setLoading(false);
     };
 

@@ -13,7 +13,7 @@ const page = () => {
   if (loading) return <GlobalLoader />;
   return (
     <section className="flex md:flex-row flex-col gap-10">
-      <div className=" w-full min-w-[430px] md:w-[33%] h-fit bg-gradient-to-b from-[#232839] to-[#12141D]  rounded-[30px] relative px-10 pb-10 pt-20">
+      <div className=" w-full md:min-w-[430px] md:w-[33%] h-fit bg-gradient-to-b from-[#232839] to-[#12141D]  rounded-[30px] relative px-10 pb-10 pt-20">
         <Image
           src="/icons/bookmark.png"
           height={100}
@@ -52,23 +52,29 @@ const page = () => {
           <h1 className="text-white text-xl md:text-2xl font-semibold uppercase">
             details
           </h1>
-          <div className="mt-5 flex gap-10">
-            <ul className=" text-md md:text-xl font-semibold text-light-100 flex flex-col gap-3">
-              <li>enrollment no. :</li>
-              <li>year :</li>
-              <li>department :</li>
-              <li>contact number :</li>
-            </ul>
-            <ul className="text-md md:text-xl font-semibold text-white flex flex-col gap-3">
-              <li>{user.enrollmentNumber}</li>
-              <li>{user.year}</li>
-              <li>{user.department}</li>
-              <li>{user.phone}</li>
+          <div className="mt-5 flex w-full gap-10">
+            <ul className=" flex flex-col gap-3 text-sm md:text-xl w-full font-semibold text-light-100">
+              <div className="flex w-full justify-between">
+                <li>enrollment no. :</li>
+                <li className="text-white">{user.enrollmentNumber}</li>
+              </div>{" "}
+              <div className="flex w-full justify-between">
+                <li>year :</li>
+                <li className="text-white">{user.year}</li>
+              </div>{" "}
+              <div className="flex w-full justify-between">
+                <li> department :</li>
+                <li className="text-white">{user.department}</li>
+              </div>{" "}
+              <div className="flex w-full justify-between ">
+                <li>phone:</li>
+                <li className="text-white">{user.phone}</li>
+              </div>{" "}
             </ul>
           </div>
         </div>
         <div className="mt-10 ">
-          <UserEdit/>
+          <UserEdit />
         </div>
       </div>
       <BorrowedBookList />

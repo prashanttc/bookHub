@@ -1,5 +1,5 @@
 export const signUp = async (data: any) => {
-  const response = await fetch("/api/signUp", {
+  const response = await fetch("/api/User/signUp", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -11,7 +11,7 @@ export const signUp = async (data: any) => {
 };
 
 export const signIn = async (data: any) => {
-  const response = await fetch("/api/signIn", {
+  const response = await fetch("/api/User/signIn", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const signIn = async (data: any) => {
 };
 
 export const updateProfile = async (data: any) => {
-  const response = await fetch("/api/ProfileUpdate", {
+  const response = await fetch("/api/User/ProfileUpdate", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -31,4 +31,22 @@ export const updateProfile = async (data: any) => {
     body: JSON.stringify(data),
   });
   return response.json();
-};  
+};
+
+export const getUser = async () => {
+  try {
+    const response = await fetch("/api/User/userDetail", {
+      method: "GET",
+      credentials: "include", 
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user details");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return { error: "Failed to load user data" };
+  }
+};

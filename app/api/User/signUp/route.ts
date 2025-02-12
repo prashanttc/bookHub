@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     ]);
 
     if (insertError) {
+      console.log(",,,,",insertError)
       return NextResponse.json({ error: "Error inserting user details" }, { status: 500 });
     }
 
