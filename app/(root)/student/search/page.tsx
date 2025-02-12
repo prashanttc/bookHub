@@ -2,20 +2,27 @@
 import BookCard from "@/components/BookCard";
 import SearchBox from "@/components/SearchBox";
 import Sort from "@/components/Sort";
-import { sampleBooks } from "@/constants";
-import React, { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useBooks } from "@/context/BookContext";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
-  const [filterBook, setFilterBook] = useState(sampleBooks);
+  const { books, loading } = useBooks();
+  const [filterBook, setFilterBook] = useState(books);
+
+  useEffect(() => {
+    setFilterBook(books); 
+  }, [books]);
+  
   const handlesearch = (query: string) => {
     if (query.trim()) {
       setFilterBook(
-        sampleBooks.filter((book) =>
+        books.filter((book) =>
           book.title.toLowerCase().includes(query.toLowerCase())
         )
       );
     } else {
-      setFilterBook(sampleBooks);
+      setFilterBook(books);
     }
   };
   return (
@@ -33,16 +40,23 @@ const page = () => {
       <div className="w-full">
         <div className="flex  justify-between items-center">
           <h1 className="text-white text-xl md:text-3xl font-medium">
-            Search Results
+            Search Results found : <span className="text-light-200">{filterBook.length}</span>
           </h1>
           <Sort />
         </div>
       </div>
       <div className="w-full ">
         <ul className="book-list relative">
-          {filterBook.map((book) => (
-            <BookCard key={book.title} {...book} />
-          ))}
+          {loading?(
+            filterBook.map((book)=>(
+              <Skeleton key={book.title} className="w-[90vw] gap-10 md:w-[250px] rounded-2xl bg-[#12141D] p-5 md:min-h-[410px] md:max-h-[410px] flex flex-row md:flex-col"/>
+            ))
+          ):(
+            filterBook.map((book) => (
+              <BookCard key={book.title} {...book} />
+            ))
+          )}
+        
         </ul>
       </div>
     </section>
