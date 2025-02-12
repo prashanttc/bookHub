@@ -1,26 +1,19 @@
 import { NextResponse } from "next/server";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
     const supabase = createRouteHandlerClient({ cookies });
     const { email, password } = await req.json();
-    const { data: existingUser, error: userError } = await supabase
-      .from("User")
-      .select("*")
-      .eq("email", email)
-      .maybeSingle();
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
 
-    if (userError) {
-      console.log("usererror",userError)
-
-      return NextResponse.json({ error: userError.message }, { status: 500 });
-    }
     if (!existingUser) {
       return NextResponse.json({ error: "No user exists with this email!" }, { status: 400 });
     }
-
     const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
 
     const session = await supabase.auth.setSession({

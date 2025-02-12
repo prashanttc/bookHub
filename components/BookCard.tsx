@@ -2,14 +2,14 @@ import Link from 'next/link'
 import React from 'react'
 import BookCover from './BookCover'
 
-const BookCard = ({id, author,color,cover, title}:bookProps) => {
+const BookCard = ({id, author,color,imageUrl, title}:bookProps) => {
   return (
   <li className=''>
     <Link href={`/student/book/${id}`} className=''>
     <div className="w-[90vw] gap-10 md:w-[250px] rounded-2xl bg-[#12141D] p-5 md:min-h-[410px] md:max-h-[410px] flex flex-row md:flex-col">
     <div className="md:w-full rounded-2xl flex md:items-center md:justify-center md:p-5 ">
-    <BookCover cover={cover} varient="medium" coverColor={color} className='hidden md:block'/>
-    <BookCover cover={cover} varient="small" coverColor={color}  className='block md:hidden'/>
+    <BookCover cover={imageUrl} varient="medium" coverColor={color} className='hidden md:block'/>
+    <BookCover cover={imageUrl} varient="small" coverColor={color}  className='block md:hidden'/>
       </div>
       <div className="mt-2 flex flex-col gap-3">
         <h1 className="text-xl font-semibold text-white ">{title}</h1>

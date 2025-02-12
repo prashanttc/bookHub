@@ -9,7 +9,7 @@
     description:string;
     summary:string; 
     color:string;
-    cover:string;  
+    imageUrl:string;  
     isLoanedBook?:boolean;
  }
  interface UserProps {
