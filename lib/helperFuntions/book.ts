@@ -26,7 +26,7 @@ export const getBookById = async (bookId: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({bookId}),
+      body: JSON.stringify({ bookId }),
     });
     if (!response.ok) {
       return toast.error("failed to load book");
@@ -34,5 +34,25 @@ export const getBookById = async (bookId: string) => {
     return response.json();
   } catch (error) {
     return toast.error("unexpected error occured");
+  }
+};
+
+export const bookBorrow = async ({
+  userId,
+  bookId,
+}: {
+  userId: string;
+  bookId: string;
+}) => {
+  try {
+    const response = await fetch("/api/book/borrowBook", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, bookId }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.error(error);
   }
 };

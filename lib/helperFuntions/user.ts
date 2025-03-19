@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export const signUp = async (data: any) => {
   const response = await fetch("/api/User/signUp", {
     method: "POST",
@@ -37,7 +39,7 @@ export const getUser = async () => {
   try {
     const response = await fetch("/api/User/userDetail", {
       method: "GET",
-      credentials: "include", 
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -48,5 +50,23 @@ export const getUser = async () => {
   } catch (error) {
     console.error("Error fetching user:", error);
     return { error: "Failed to load user data" };
+  }
+};
+
+export const getborrowedBook = async () => {
+  try {
+    const response = await fetch("/api/User/userBorrowedBooks", {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      toast.error('failed to fetch books');
+      return [];
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return toast.error("unexpected error occured");
   }
 };

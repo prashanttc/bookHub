@@ -1,5 +1,4 @@
 "use client";
-import { useUser } from "@/context/UserContext";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,8 +7,6 @@ import React from "react";
 
 const Header = () => {
   const path = usePathname();
-  const { loading, user } = useUser();
-  if (loading) return <p>Loading...</p>;
   return (
     <header className="my-5 flex justify-between gap-5 ">
       <Link href="/">

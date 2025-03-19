@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import BookCard from "../BookCard";
-import { Skeleton } from "../ui/skeleton";
 
 type bookListProps = {
   books: bookProps[];
   loading: boolean;
 };
 const BookList = ({ books, loading }: bookListProps) => {
-  const [visibleCount, setVisibleCount] = useState(5);
+  const [visibleCount, setVisibleCount] = useState(4);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const updateVisibleCount = () => {
@@ -16,7 +15,7 @@ const BookList = ({ books, loading }: bookListProps) => {
     if (screenWidth < 768) {
       setVisibleCount(3);
     } else {
-      setVisibleCount(5);
+      setVisibleCount(4);
     }
   };
 
@@ -51,21 +50,11 @@ const BookList = ({ books, loading }: bookListProps) => {
         </p>
       </div>
       <div className="relative">
-        <ul className="book-list relative">
-          {loading ? (
-            <>
-              {books.slice(0, visibleCount).map((book) => (
-                <Skeleton key={book.title}  className="w-[90vw] gap-10 md:w-[250px] rounded-2xl bg-[#12141D] p-5 md:min-h-[410px] md:max-h-[410px] flex flex-row md:flex-col"/>
-              ))}
-            </>
-          ) : (
-            <>
+        <ul className="book-list items-center justify-center relative">
               {" "}
               {books.slice(0, visibleCount).map((book) => (
                 <BookCard key={book.title} {...book} />
               ))}
-            </>
-          )}
         </ul>
       </div>
     </section>

@@ -12,7 +12,7 @@ const layout = async ({ children }: { children: ReactNode }) => {
         <BookProvider>
         <div className=" w-full">
           <Header />
-          <div className="mt-20 pb-20">{children}</div>
+          <div className="mt-10 pb-20">{children}</div>
           <Toaster />
         </div>
         </BookProvider>

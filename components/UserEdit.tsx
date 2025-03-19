@@ -7,7 +7,7 @@ const UserEdit = () => {
   return (
     <AlertDialog>
   <AlertDialogTrigger className='bg-light-200 p-2 px-5 rounded-xl text-black font-semibold'>edit profile</AlertDialogTrigger>
-  <AlertDialogContent className='bg-dark-100 w-[100vw] md:min-w-[40vw]  p-10 border-none text-white  '>
+  <AlertDialogContent className='bg-dark-100 w-[100vw] md:min-w-[50vw]  p-10 border-none text-white  '>
     <AlertDialogHeader className='flex items-center'>
       <AlertDialogTitle className='text-2xl '>edit you profile</AlertDialogTitle>
     </AlertDialogHeader>

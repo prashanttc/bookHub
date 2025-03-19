@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 
-const SearchBox = ({ onsearch }: { onsearch: (query: string) => void }) => {
+const SearchBox = ({ onsearch ,}: { onsearch: (query: string) => void ;}) => {
   const [query, setQuery] = useState("");
-
   const handleSearch = () => {
     onsearch(query);
   };

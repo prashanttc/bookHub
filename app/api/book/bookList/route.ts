@@ -11,14 +11,9 @@ export async function GET() {
       error: authError,
     } = await supabaseAuth.auth.getUser();
 
-    if (!user) {
+    if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
-    if (authError) {
-      return NextResponse.json({ error: authError.message }, { status: 401 });
-    }
-
     const { data, error } = await supabase
       .from("Book")
       .select("*")
